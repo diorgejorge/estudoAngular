@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+     <meta charset="UTF-8">
+    <script src="javascripts/angular.min.js"></script>
+    <script src="javascripts/redmine.js"></script>
+    <script src="javascripts/date.js"></script>
+    <script src="javascripts/moment.min.js"></script>
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/bootstrap.js"></script>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+</head>
+<body class="container">
+<div class="page-header col-md-12">Projetos Redmine: <a href="http://192.168.40.7/relatorios/redmine/redmine2.html">ver Redmine 2</a></div>
+<div ng-app="redmineApp" ng-controller="redmineCtrl as redmine" class="col-md-12">
+	<div ng-repeat="x in redmine.projetos" >
+    <div class="panel panel-info " ng-if="redmine.projetos[x.identifier].length>0">
+        <div class="panel-heading" ><a href="http://redmine.totvs.sa/projects/{{x.identifier}}">{{x.name}}</a></div>
+
+        <div class="panel-body">Tarefas Atrasadas:</div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-4">Nome</th>
+				<th class="col-md-2">Descri&ccedil;&atilde;o</th>
+                <th class="col-md-2">Status</th>
+                <th class="col-md-2">Data Prevista</th>
+				<th>Atribu&iacute;do para</th>
+                <th>Atraso</th>
+				<th class="col-md-2">% feito</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="y in redmine.projetos[x.identifier]">
+                <td><a href="http://redmine.totvs.sa/issues/{{y.id}}">{{y.subject}}</a></td>
+				<td ng-bind-html="y.description | renderHTML"></td>
+                <td>{{y.status.name}}</td>
+                <td>{{y.due_date}}</td>
+                <td>{{y.assigned_to.name}}</td>
+				<td>{{ y.due_date | getAge }}</td>
+				<td>
+				<div class="progress">
+				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ y.done_ratio }}%;">
+				{{ y.done_ratio }}%
+				</div>
+				</div>
+				
+				</td>
+				
+			</tr>
+            </tbody>
+    </div>
+    </table>
+	</div>
+</div>
+</body>
+</html>
