@@ -1,1 +1,1 @@
-<?php include_once("redmine.html"); ?>
+<?php include_once("redirect.html"); ?>
