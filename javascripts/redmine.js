@@ -66,5 +66,5 @@ app.controller('redmineCtrl', function($http) {
 	function getAtrasado(input) {
         return moment(input, "YYYY-MM-DD").locale('pt').isBefore(moment());
     }
-	
-  });
+
+   });
